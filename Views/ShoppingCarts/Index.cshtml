@@ -1,12 +1,14 @@
-﻿@model IEnumerable<MusicStore.Models.Songs>
+﻿@model IEnumerable<MusicStore.Models.ShoppingCart>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Songs</h1>
+<h1>My Shopping Cart, How lovely</h1>
 
-
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -16,6 +18,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.SongPrice)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -27,13 +30,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SongPrice)
             </td>
-            <td>
-                <form asp-controller="ShoppingCarts" asp-action="Create" method="post">
-                        <input type="hidden" name="SongName" value="@item.SongName" />
-                        <input type="hidden" name="SongPrice" value="@item.SongPrice" />
-                        <button type="submit">Add to Cart</button>
-                </form>
-            </td>
         </tr>
 }
     </tbody>
@@ -41,3 +37,4 @@
 
 
 
+<button onclick="alert('Sucessfully Purchased!!!!')"> Press this button to pay </button>

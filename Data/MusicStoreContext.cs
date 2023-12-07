@@ -19,5 +19,7 @@ namespace MusicStore.Data
         public DbSet<MusicStore.Models.Genres> Genres { get; set; } = default!;
 
         public DbSet<MusicStore.Models.Songs> Songs { get; set; } = default!;
+
+        public DbSet<MusicStore.Models.ShoppingCart> ShoppingCart { get; set; } = default!;
     }
 }
