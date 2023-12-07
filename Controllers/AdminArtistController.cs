@@ -10,91 +10,87 @@ using MusicStore.Models;
 
 namespace MusicStore.Controllers
 {
-    public class ShoppingCartsController : Controller
+    public class AdminArtistController : Controller
     {
         private readonly MusicStoreContext _context;
 
-        public ShoppingCartsController(MusicStoreContext context)
+        public AdminArtistController(MusicStoreContext context)
         {
             _context = context;
         }
 
-
-        // GET: ShoppingCarts
+        // GET: AdminArtist
         public async Task<IActionResult> Index()
         {
-
-
-
-              return _context.ShoppingCart != null ? 
-                          View(await _context.ShoppingCart.ToListAsync()) :
-                          Problem("Entity set 'MusicStoreContext.ShoppingCart'  is null.");
+              return _context.Artists != null ? 
+                          View(await _context.Artists.ToListAsync()) :
+                          Problem("Entity set 'MusicStoreContext.Artists'  is null.");
         }
 
-        // GET: ShoppingCarts/Details/5
+        // GET: AdminArtist/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.ShoppingCart == null)
+            if (id == null || _context.Artists == null)
             {
                 return NotFound();
             }
 
-            var shoppingCart = await _context.ShoppingCart
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (shoppingCart == null)
+            var artists = await _context.Artists
+                .FirstOrDefaultAsync(m => m.ArtistID == id);
+            if (artists == null)
             {
                 return NotFound();
             }
 
-            return View(shoppingCart);
+            return View(artists);
         }
 
-        // GET: ShoppingCarts/Create
+        // GET: AdminArtist/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ShoppingCarts/Create
+        // POST: AdminArtist/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,SongName,SongPrice")] ShoppingCart shoppingCart)
+        public async Task<IActionResult> Create([Bind("ArtistID,ArtistName,GenreID")] Artists artists)
         {
             if (ModelState.IsValid)
-    {
-        _context.Add(shoppingCart);
-        await _context.SaveChangesAsync();
-        return RedirectToAction("Index");
-    }
-    return View("Index", shoppingCart); 
+            {
+                _context.Add(artists);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(artists);
         }
 
-        // GET: ShoppingCarts/Edit/5
+        // GET: AdminArtist/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.ShoppingCart == null)
+            if (id == null || _context.Artists == null)
             {
                 return NotFound();
             }
 
-            var shoppingCart = await _context.ShoppingCart.FindAsync(id);
-            if (shoppingCart == null)
+            var artists = await _context.Artists.FindAsync(id);
+            if (artists == null)
             {
                 return NotFound();
             }
-            return View(shoppingCart);
+            return View(artists);
         }
 
-        // POST: ShoppingCarts/Edit/5
+        // POST: AdminArtist/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,SongName,SongPrice")] ShoppingCart shoppingCart)
+        public async Task<IActionResult> Edit(int id, [Bind("ArtistID,ArtistName,GenreID")] Artists artists)
         {
-            if (id != shoppingCart.Id)
+            if (id != artists.ArtistID)
             {
                 return NotFound();
             }
@@ -103,12 +99,12 @@ namespace MusicStore.Controllers
             {
                 try
                 {
-                    _context.Update(shoppingCart);
+                    _context.Update(artists);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ShoppingCartExists(shoppingCart.Id))
+                    if (!ArtistsExists(artists.ArtistID))
                     {
                         return NotFound();
                     }
@@ -119,49 +115,49 @@ namespace MusicStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(shoppingCart);
+            return View(artists);
         }
 
-        // GET: ShoppingCarts/Delete/5
+        // GET: AdminArtist/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.ShoppingCart == null)
+            if (id == null || _context.Artists == null)
             {
                 return NotFound();
             }
 
-            var shoppingCart = await _context.ShoppingCart
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (shoppingCart == null)
+            var artists = await _context.Artists
+                .FirstOrDefaultAsync(m => m.ArtistID == id);
+            if (artists == null)
             {
                 return NotFound();
             }
 
-            return View(shoppingCart);
+            return View(artists);
         }
 
-        // POST: ShoppingCarts/Delete/5
+        // POST: AdminArtist/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.ShoppingCart == null)
+            if (_context.Artists == null)
             {
-                return Problem("Entity set 'MusicStoreContext.ShoppingCart'  is null.");
+                return Problem("Entity set 'MusicStoreContext.Artists'  is null.");
             }
-            var shoppingCart = await _context.ShoppingCart.FindAsync(id);
-            if (shoppingCart != null)
+            var artists = await _context.Artists.FindAsync(id);
+            if (artists != null)
             {
-                _context.ShoppingCart.Remove(shoppingCart);
+                _context.Artists.Remove(artists);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ShoppingCartExists(int id)
+        private bool ArtistsExists(int id)
         {
-          return (_context.ShoppingCart?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Artists?.Any(e => e.ArtistID == id)).GetValueOrDefault();
         }
     }
 }

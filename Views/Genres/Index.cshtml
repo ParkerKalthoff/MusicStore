@@ -20,8 +20,6 @@
     function updateLink() {
         var dropdown = document.getElementById('genres');
         var selectedGenre = dropdown.options[dropdown.selectedIndex].value;
-
-        // Assuming your controller is named 'YourController' and your action is named 'YourAction'
         var linkUrl = '@Url.Action("Index", "Artists")' + '?genre=' + encodeURIComponent(selectedGenre);
 
         document.getElementById('genreLink').href = linkUrl;

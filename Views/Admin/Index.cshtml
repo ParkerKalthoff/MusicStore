@@ -1,0 +1,19 @@
+﻿@model IEnumerable<MusicStore.Models.ShoppingCart>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Admin Page</h1>
+
+<ol>
+    <li class="nav-item active">
+        <a class="nav-link" href="@Url.Action("Index", "AdminArtist")"> Artists Admin Page </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Index", "AdminGenres")"> Admin Genres Page </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Index", "AdminSongs")"> Admin Song Page</a>
+    </li>
+</ol>
