@@ -20,11 +20,14 @@ namespace MusicStore.Controllers
         }
 
         // GET: Artists
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int genre = 1)
         {
-              return _context.Artists != null ? 
-                          View(await _context.Artists.ToListAsync()) :
-                          Problem("Entity set 'MusicStoreContext.Artists'  is null.");
+            var artists = _context.Artists
+            .Where(a => a.GenreID == genre)
+            .ToList();
+
+
+            return View(artists);
         }
 
         // GET: Artists/Details/5

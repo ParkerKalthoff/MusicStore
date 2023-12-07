@@ -6,36 +6,26 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ArtistName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GenreID)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArtistName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GenreID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ArtistID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ArtistID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ArtistID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+
+<select name="artists" id="artists" onchange="updateLink()">
+    @foreach (var item in Model)
+    {
+        <option value="@item.ArtistID.ToString()">
+            @Html.DisplayFor(modelItem => item.ArtistName)
+        </option>
+    }
+</select>
+
+<a id="artistLink" href="#">Go to selected Artist</a>
+
+<script>
+    function updateLink() {
+        var dropdown = document.getElementById('artists');
+        var selectedArtist = dropdown.options[dropdown.selectedIndex].value;
+
+        var linkUrl = '@Url.Action("Index", "Songs")' + '?artist=' + encodeURIComponent(selectedArtist);
+
+        document.getElementById('artistLink').href = linkUrl;
+    }
+</script>

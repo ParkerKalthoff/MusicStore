@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Humanizer.Localisation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,11 +21,14 @@ namespace MusicStore.Controllers
         }
 
         // GET: Songs
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int artist = 1)
         {
-              return _context.Songs != null ? 
-                          View(await _context.Songs.ToListAsync()) :
-                          Problem("Entity set 'MusicStoreContext.Songs'  is null.");
+            var artists = _context.Songs
+          .Where(a => a.ArtistID == artist)
+          .ToList();
+
+
+            return View(artists);
         }
 
         // GET: Songs/Details/5

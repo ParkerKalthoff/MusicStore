@@ -4,32 +4,26 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.GenreName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+
+<select name="genres" id="genres" onchange="updateLink()">
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.GenreName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.GenreId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.GenreId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.GenreId">Delete</a>
-            </td>
-        </tr>
+        <option value="@item.GenreId.ToString()">
+            @Html.DisplayFor(modelItem => item.GenreName)
+        </option>
 }
-    </tbody>
-</table>
+</select>
+
+<a id="genreLink" href="#">Go to selected genre</a>
+
+<script>
+    function updateLink() {
+        var dropdown = document.getElementById('genres');
+        var selectedGenre = dropdown.options[dropdown.selectedIndex].value;
+
+        // Assuming your controller is named 'YourController' and your action is named 'YourAction'
+        var linkUrl = '@Url.Action("Index", "Artists")' + '?genre=' + encodeURIComponent(selectedGenre);
+
+        document.getElementById('genreLink').href = linkUrl;
+    }
+</script>

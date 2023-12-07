@@ -19,9 +19,16 @@ namespace MusicStore.Controllers
             _context = context;
         }
 
+
+
         // GET: Genres
         public async Task<IActionResult> Index()
         {
+            var data = _context.Genres.ToList();
+            ViewBag.Data = data;
+
+
+
               return _context.Genres != null ? 
                           View(await _context.Genres.ToListAsync()) :
                           Problem("Entity set 'MusicStoreContext.Genres'  is null.");
